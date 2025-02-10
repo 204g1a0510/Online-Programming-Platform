@@ -1,0 +1,167 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Management</title>
+    <style>
+        /* Page Title */
+      
+        .page-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #FF5722; /* Solid color instead of gradient text */
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        /* Form Container */
+        .form-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #f7f7f7;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Fields */
+        .form-field {
+            margin-bottom: 20px;
+        }
+
+        .form-field label {
+            font-size: 18px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .form-textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: #FF5722;
+            box-shadow: 0 0 5px rgba(255, 87, 34, 0.6);
+            outline: none;
+        }
+
+        /* Radio Buttons Styling */
+        .btn-group {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .btn-check:checked + .btn {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .btn-outline-primary {
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .submit-btn button {
+            background-color: #FF5722;
+            color: white;
+            font-size: 18px;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn button:hover {
+            background-color: #e64a19;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .form-container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .page-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div style="padding-top:20px; padding-left:40px;font-size:25px">
+    {% if room %}
+    <h4 class="page-title">UPDATE ROOM</h4>
+    {%else%}
+    <h4 class="page-title">CREATE ROOM AND QUESTIONS</h4>
+    {%endif%}
+    <div class="form-container">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-field">
+                <label for="roomname">Room/Lab Name:</label>
+                <input type="text" id="roomname" name="roomname" required value="{{room.name}}" class="form-input">
+            </div>
+
+            <div class="form-field">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description" class="form-textarea">{{room.description}}</textarea>
+            </div>
+
+            <div class="form-field">
+                <label for="roompassword">Password:</label>
+                <input type="text" id="roompassword" name="roompassword" required value="{{room.password}}" class="form-input">
+            </div>
+
+            {% if room %}
+            {%else%}
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="btnradio1" autocomplete="off" checked required>
+                <label class="btn btn-outline-primary" for="btnradio1">Add Questions</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio2">Create Only Room</label>
+            </div>
+            {%endif%}
+            
+            <div class="submit-btn">
+                <button class="btn btn-danger" type="submit">Submit & Continue</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}
